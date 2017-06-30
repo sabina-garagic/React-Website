@@ -28,28 +28,23 @@ export default class extends React.Component {
   }
 
   updateName(_id) {
-    return ev => {
-    const state = this.state || {}
-    let recipeList = this.state.recipeList || this.props.recipeList || []
-    const updatedElementIndex = recipeList.map(x => x._id).indexOf(_id);
-    recipeList[updatedElementIndex].name = ev.target.value;
-    this.setState(
-       recipeList
-     ); 
-    }
+    return ev => this.updateProperties(_id, { name: ev.target.value });
   }  
 
   updateInstructions(_id) {
-    return ev => {
+    return ev => this.updateProperties(_id, { instructions: ev.target.value });
+  }
+
+  updateProperties(_id, props) {
     const state = this.state || {}
     let recipeList = this.state.recipeList || this.props.recipeList || []
     const updatedElementIndex = recipeList.map(x => x._id).indexOf(_id);
-    recipeList[updatedElementIndex].instructions = ev.target.value;
+    const recipe = recipeList[updatedElementIndex];
+    Object.assign(recipe, props);
     this.setState(
-       recipeList
-     ); 
-    }
-  } 
+      recipeList
+    ); 
+  }
 
   isFormInvalid() {
     const state = this.state || {}
